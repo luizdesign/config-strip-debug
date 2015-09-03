@@ -8,9 +8,14 @@ var stripAlert = require('rocambole-strip-alert');
 // loop the same node twice (see jquery/esprima/issues/1031 and #264)
 rocambole.BYPASS_RECURSION.handler = true;
 
-module.exports = function (src) {
+module.exports = function (src, options) {
 	return rocambole.moonwalk(src, function (node) {
-		stripDebugger(node);
+        var canRemoveDebugger = (!options || options.debugger !== false);
+
+        if (canRemoveDebugger) {
+		  stripDebugger(node);
+        }
+
 		stripConsole(node);
 		stripAlert(node);
 	});
