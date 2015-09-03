@@ -33,12 +33,21 @@ it('shouldn\'t strip console statement', function () {
 
 it('should strip alert statement', function () {
 	assert.equal(stripDebug('function test(){alert("foo");}').toString(), 'function test(){void 0;}');
-	assert.equal(stripDebug('function test(){window.alert("foo");}').toString(), 'function test(){void 0;}');
+	assert.equal(stripDebug('function test(){window.alert("foo");}', {alert: true}).toString(), 'function test(){void 0;}');
 	assert.equal(stripDebug('var test = () => alert("foo");').toString(), 'var test = () => void 0;');
-	assert.equal(stripDebug('"use strict";alert("foo");foo()').toString(), '"use strict";void 0;foo()');
+	assert.equal(stripDebug('"use strict";alert("foo");foo()', {alert: true}).toString(), '"use strict";void 0;foo()');
 	assert.equal(stripDebug('if(alert){alert("foo", "bar");}').toString(), 'if(alert){void 0;}');
-	assert.equal(stripDebug('foo && alert("foo");').toString(), 'foo && void 0;');
+	assert.equal(stripDebug('foo && alert("foo");', {alert: true}).toString(), 'foo && void 0;');
 	assert.equal(stripDebug('if (foo) alert("foo")\nnextLine();').toString(), 'if (foo) void 0\nnextLine();');
+});
+it('shouldn\'t strip alert statement', function () {
+	assert.equal(stripDebug('function test(){alert("foo");}', {alert: false}).toString(), 'function test(){alert("foo");}');
+	assert.equal(stripDebug('function test(){window.alert("foo");}', {alert: false}).toString(), 'function test(){window.alert("foo");}');
+	assert.equal(stripDebug('var test = () => alert("foo");', {alert: false}).toString(), 'var test = () => alert("foo");');
+	assert.equal(stripDebug('"use strict";alert("foo");foo()', {alert: false}).toString(), '"use strict";alert("foo");foo()');
+	assert.equal(stripDebug('if(alert){alert("foo", "bar");}', {alert: false}).toString(), 'if(alert){alert("foo", "bar");}');
+	assert.equal(stripDebug('foo && alert("foo");', {alert: false}).toString(), 'foo && alert("foo");');
+	assert.equal(stripDebug('if (foo) alert("foo")\nnextLine();', {alert: false}).toString(), 'if (foo) alert("foo")\nnextLine();');
 });
 
 it('should never strip away non-debugging code', function () {

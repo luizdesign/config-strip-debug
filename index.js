@@ -11,7 +11,8 @@ rocambole.BYPASS_RECURSION.handler = true;
 module.exports = function (src, options) {
 	return rocambole.moonwalk(src, function (node) {
         var canRemoveDebugger = (!options || options.debugger !== false),
-            canRemoveConsole = (!options || options.console !== false);
+            canRemoveConsole = (!options || options.console !== false),
+            canRemoveAlert = (!options || options.alert !== false);
 
         if (canRemoveDebugger) {
             stripDebugger(node);
@@ -21,6 +22,8 @@ module.exports = function (src, options) {
             stripConsole(node);
         }
 
-		stripAlert(node);
+        if (canRemoveAlert) {
+            stripAlert(node);
+        }
 	});
 };
