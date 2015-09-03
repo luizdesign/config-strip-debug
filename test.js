@@ -3,8 +3,14 @@ var assert = require('assert');
 var stripDebug = require('./');
 
 it('should strip debugger statement', function () {
-	assert.equal(stripDebug('function test(){debugger;}').toString(), 'function test(){}');
-	assert.equal(stripDebug('"use strict";debugger;foo()').toString(), '"use strict";foo()');
+	var mock = 'function test(){debugger;}',
+		mock1 = '"use strict";debugger;foo()';
+
+	assert.equal(stripDebug(mock).toString(), 'function test(){}');
+	assert.equal(stripDebug(mock1).toString(), '"use strict";foo()');
+
+	assert.equal(stripDebug(mock, {debugger: false}).toString(), mock);
+	assert.equal(stripDebug(mock1, {debugger: false}).toString(), mock1);
 });
 
 it('should strip console statement', function () {
