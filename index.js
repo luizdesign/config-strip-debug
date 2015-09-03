@@ -10,13 +10,17 @@ rocambole.BYPASS_RECURSION.handler = true;
 
 module.exports = function (src, options) {
 	return rocambole.moonwalk(src, function (node) {
-        var canRemoveDebugger = (!options || options.debugger !== false);
+        var canRemoveDebugger = (!options || options.debugger !== false),
+            canRemoveConsole = (!options || options.console !== false);
 
         if (canRemoveDebugger) {
-		  stripDebugger(node);
+            stripDebugger(node);
         }
 
-		stripConsole(node);
+        if (canRemoveConsole) {
+            stripConsole(node);
+        }
+
 		stripAlert(node);
 	});
 };

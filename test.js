@@ -14,12 +14,21 @@ it('shouldn\'t strip debugger statement', function () {
 
 it('should strip console statement', function () {
 	assert.equal(stripDebug('function test(){console.log("foo");}').toString(), 'function test(){void 0;}');
-	assert.equal(stripDebug('function test(){window.console.log("foo");}').toString(), 'function test(){void 0;}');
-	assert.equal(stripDebug('var test = () => console.log("foo");').toString(), 'var test = () => void 0;');
-	assert.equal(stripDebug('"use strict";console.log("foo");foo()').toString(), '"use strict";void 0;foo()');
-	assert.equal(stripDebug('if(console){console.log("foo", "bar");}').toString(), 'if(console){void 0;}');
-	assert.equal(stripDebug('foo && console.log("foo");').toString(), 'foo && void 0;');
-	assert.equal(stripDebug('if (foo) console.log("foo")\nnextLine();').toString(), 'if (foo) void 0\nnextLine();');
+	assert.equal(stripDebug('function test(){window.console.warning("foo");}').toString(), 'function test(){void 0;}');
+	assert.equal(stripDebug('var test = () => console.error("foo");', {console: true}).toString(), 'var test = () => void 0;');
+	assert.equal(stripDebug('"use strict";console.info("foo");foo()').toString(), '"use strict";void 0;foo()');
+	assert.equal(stripDebug('if(console){console.table("foo", "bar");}', {console: true}).toString(), 'if(console){void 0;}');
+	assert.equal(stripDebug('foo && console.trace("foo");').toString(), 'foo && void 0;');
+	assert.equal(stripDebug('if (foo) console.dir("foo")\nnextLine();', {console: true}).toString(), 'if (foo) void 0\nnextLine();');
+});
+it('shouldn\'t strip console statement', function () {
+	assert.equal(stripDebug('function test(){console.log("foo");}', {console: false}).toString(), 'function test(){console.log("foo");}');
+	assert.equal(stripDebug('function test(){window.console.warning("foo");}', {console: false}).toString(), 'function test(){window.console.warning("foo");}');
+	assert.equal(stripDebug('var test = () => console.error("foo");', {console: false}).toString(), 'var test = () => console.error("foo");');
+	assert.equal(stripDebug('"use strict";console.info("foo");foo()', {console: false}).toString(), '"use strict";console.info("foo");foo()');
+	assert.equal(stripDebug('if(console){console.table("foo", "bar");}', {console: false}).toString(), 'if(console){console.table("foo", "bar");}');
+	assert.equal(stripDebug('foo && console.trace("foo");', {console: false}).toString(), 'foo && console.trace("foo");');
+	assert.equal(stripDebug('if (foo) console.dir("foo")\nnextLine();', {console: false}).toString(), 'if (foo) console.dir("foo")\nnextLine();');
 });
 
 it('should strip alert statement', function () {
