@@ -48,6 +48,7 @@
     "rocambole-strip-debugger": "^1.0.0"
   },
   "devDependencies": {
+    "chai": "^3.2.0",
     "mocha": "*"
   }
 }
