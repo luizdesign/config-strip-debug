@@ -4,9 +4,9 @@ var expect = require('chai').expect,
     stripDebug = require('./../');
 
 describe(
-    '# Testing Console statement',
+    '# Testing Console statements',
     function() {
-        it('Should strip console statement', function () {
+        it('Should strip console statements', function () {
             expect(stripDebug('function test(){console.log("foo");}').toString())
                 .to.be.a('string')
                 .to.equal('function test(){void 0;}');
@@ -36,7 +36,7 @@ describe(
                 .to.equal('if (foo) void 0\nnextLine();');
         });
 
-        it('Shouldn\'t strip console statement', function () {
+        it('Shouldn\'t strip console statements when the console config is equal to false', function () {
             expect(stripDebug('function test(){console.log("foo");}', {console: false}).toString())
                 .to.be.a('string')
                 .to.equal('function test(){console.log("foo");}');

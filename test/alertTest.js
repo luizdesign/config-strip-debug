@@ -4,7 +4,7 @@ var expect = require('chai').expect,
     stripDebug = require('./../');
 
 describe(
-    '# Testing Alert statement',
+    '# Testing Alert statements',
     function() {
         it('Should strip alert statement', function () {
             expect(stripDebug('function test(){alert("foo");}').toString())
@@ -36,7 +36,7 @@ describe(
                 .to.equal('if (foo) void 0\nnextLine();');
         });
 
-        it('Shouldn\'t strip alert statement', function () {
+        it('Shouldn\'t strip alert statements when alert config is equal to false', function () {
             expect(stripDebug('function test(){alert("foo");}', {alert: false}).toString())
                 .to.be.a('string')
                 .to.equal('function test(){alert("foo");}');

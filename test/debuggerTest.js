@@ -3,8 +3,8 @@
 var expect = require('chai').expect,
     stripDebug = require('./../');
 
-describe ('# Testing Debugger statement', function() {
-    it ('Should strip debugger statement', function() {
+describe ('# Testing Debugger statements', function() {
+    it ('Should strip debugger statements', function() {
         expect(stripDebug('function test(){debugger;}').toString())
             .to.be.a('string')
             .to.equal("function test(){}");
@@ -30,7 +30,7 @@ describe ('# Testing Debugger statement', function() {
             .to.equal('function test(){}');
     });
 
-    it('Shouldn\'t strip debugger statement', function () {
+    it('Shouldn\'t strip debugger statements when the debugger config is equal to false', function () {
         expect(stripDebug('function test(){debugger;}', {debugger: false}).toString())
             .to.be.a('string')
             .to.equal('function test(){debugger;}');
