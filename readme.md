@@ -1,18 +1,20 @@
-# strip-debug [![Build Status](https://travis-ci.org/sindresorhus/strip-debug.svg?branch=master)](https://travis-ci.org/sindresorhus/strip-debug)
+# config-strip-debug [![Build Status](https://travis-ci.org/luizdesign/config-strip-debug.svg?branch=master)](https://travis-ci.org/luizdesign/config-strip-debug)
 
 > Strip `console`, `alert`, and `debugger` statements from JavaScript code
 
-Useful for making sure you didn't leave any logging in production code.
+Useful for making sure you didn't leave any logging in builded code.
 
-Also available as [gulp](https://github.com/sindresorhus/gulp-strip-debug)/[grunt](https://github.com/sindresorhus/grunt-strip-debug)/[broccoli](https://github.com/sindresorhus/broccoli-strip-debug) plugins.
+Also available as [gulp](https://github.com/luizdesign/gulp-config-strip-debug) plugin.
 
 
 ## Usage
 
-```
-$ npm install --save strip-debug
+For install:
+```sh
+npm install --save strip-debug
 ```
 
+For use this module:
 ```js
 var stripDebug = require('strip-debug');
 
@@ -33,18 +35,20 @@ To prevent any side-effects, `console.*`/`alert*` is replaced with `void 0` inst
 
 ### input
 
-Type: `string`, `object`
+Type: `string`
 
 Pass in a string of JavaScript code or a [Esprima compatible AST](http://esprima.org).
 
 
 ## CLI
 
-```
+For install:
+```sh
 $ npm install --global strip-debug
 ```
 
-```
+For use:
+```sh
 $ strip-debug --help
 
   Usage
@@ -56,7 +60,14 @@ $ strip-debug --help
     $ cat src/app.js | strip-debug > dist/app.js
 ```
 
+## Testing
+For execute the unit tests:
+```sh
+npm test
+```
 
-## License
+### Coverage
+For generate the code coverage this module use the [istambul](http://gotwarlost.github.io/istanbul/). The code coverage report is generate in **coverage/** folder.
 
-MIT © [Sindre Sorhus](http://sindresorhus.com)
+## Contribute
+For contribute with this project, create a fork in github https://github.com/luizdesign/config-strip-debug.
