@@ -6,9 +6,6 @@ var stripDebugger = require('rocambole-strip-debugger');
 var stripConsole = require('rocambole-strip-console');
 var stripAlert = require('rocambole-strip-alert');
 
-// Internal Modules
-var services = require('./service');
-
 // Debug options
 var stripDebugDefaultOptions = {
     debugger: true,
@@ -21,8 +18,8 @@ var stripDebugDefaultOptions = {
 rocambole.BYPASS_RECURSION.handler = true;
 
 module.exports = function (src, options) {
-    var validation = services.validation(src);
-    var stripDebugOptions = services.options.mergeObject(
+    var validation = Services.validation(src);
+    var stripDebugOptions = Services.mergeObject(
         stripDebugDefaultOptions,
         options
     );
@@ -44,4 +41,37 @@ module.exports = function (src, options) {
             stripAlert(node);
         }
 	});
+};
+
+
+var Services = {
+    mergeObject: function(defaults, params) {
+        var mergedObject = {};
+
+        for (var attrname in defaults) {
+            mergedObject[attrname] = defaults[attrname];
+        }
+        for (var attrname in params) {
+            mergedObject[attrname] = params[attrname];
+        }
+
+        return mergedObject;
+    },
+    validation: function(src) {
+        var validation = true,
+            message = '';
+
+        if (typeof src !== 'string') {
+            validation = false;
+            message = 'TypeError: src must be a string';
+        } else if (src === '') {
+            validation = false;
+            message = 'ReferenceError: src is mandatory';
+        }
+
+        return {
+            status: validation,
+            throwMessage: message
+        };
+    }
 };
