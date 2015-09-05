@@ -1,10 +1,10 @@
 {
-  "name": "strip-debug",
+  "name": "config-strip-debug",
   "version": "1.0.0",
   "description": "Strip console, alert, and debugger statements from JavaScript code",
   "license": "MIT",
   "bin": "cli.js",
-  "repository": "luizdesign/strip-debug",
+  "repository": "luizdesign/config-strip-debug",
   "author": {
     "name": "Luiz Kota",
     "email": "luiz.zk@gmail.com"
