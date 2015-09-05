@@ -1,6 +1,6 @@
 {
   "name": "config-strip-debug",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Strip console, alert, and debugger statements from JavaScript code",
   "license": "MIT",
   "bin": "cli.js",
