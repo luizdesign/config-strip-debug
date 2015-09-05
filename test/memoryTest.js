@@ -1,14 +1,22 @@
 'use strict';
-var assert = require('assert'),
-	stripDebug = require('./../');
+
+var should = require('chai').should(),
+    stripDebug = require('./../'),
+    options = {
+        alert: true,
+        console: true,
+        debugger: true
+    };
 
 describe(
 	'# Testing memory',
 	function() {
 		it('shouldn\'t leak memory', function () {
-			assert.doesNotThrow(function () {
+			(function () {
 				stripDebug('var obj = null; try { obj = \'something\'; } catch (e) { console.warn(\'NOPE!\'); }').toString();
-			});
+			}).should
+            .not
+            .Throw()
 		});
 	}
 )

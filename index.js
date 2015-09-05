@@ -9,6 +9,10 @@ var stripAlert = require('rocambole-strip-alert');
 rocambole.BYPASS_RECURSION.handler = true;
 
 module.exports = function (src, options) {
+    if (typeof src !== "string") {
+        throw "TypeError: src must be a string";
+    }
+
 	return rocambole.moonwalk(src, function (node) {
         var canRemoveDebugger = (!options || options.debugger !== false),
             canRemoveConsole = (!options || options.console !== false),
